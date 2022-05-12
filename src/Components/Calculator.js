@@ -1,5 +1,9 @@
 import React, { useReducer } from 'react';
 
+// COMPONENTS
+import DigitButton from '../DigitButton';
+
+
 // STYLES
 import styles from "./Calculator.module.css";
 
@@ -35,20 +39,20 @@ const Calculator = () => {
             <button className={styles.two_columns}>AC</button>
             <button>DEL</button>
             <button>/</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "1"}})}>1</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "2"}})}>2</button>
-            <button  onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "3"}})}>3</button>
+            <DigitButton dispatch={dispatch} digit="1" />
+            <DigitButton dispatch={dispatch} digit="2" />
+            <DigitButton dispatch={dispatch} digit="3" />
             <button>*</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "4"}})}>4</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "5"}})}>5</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "6"}})}>6</button>
+            <DigitButton dispatch={dispatch} digit="4" />
+            <DigitButton dispatch={dispatch} digit="5" />
+            <DigitButton dispatch={dispatch} digit="6" />
             <button>+</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "7"}})}>7</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "8"}})}>8</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "9"}})}>9</button>
+            <DigitButton dispatch={dispatch} digit="7" />
+            <DigitButton dispatch={dispatch} digit="8" />
+            <DigitButton dispatch={dispatch} digit="9" />
             <button>-</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "."}})}>.</button>
-            <button onClick={() => dispatch({type: "ADD_DIGIT", payload: {digit: "0"}})}>0</button>
+            <DigitButton dispatch={dispatch} digit="." />
+            <DigitButton dispatch={dispatch} digit="0" />
             <button className={styles.two_columns}>=</button>
         </div>
     );
