@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 
 // COMPONENTS
 import DigitButton from '../DigitButton';
-
+import OperationButton from './OperationButton';
 
 // STYLES
 import styles from "./Calculator.module.css";
@@ -38,19 +38,19 @@ const Calculator = () => {
             </div>
             <button className={styles.two_columns}>AC</button>
             <button>DEL</button>
-            <button>/</button>
+            <OperationButton dispatch={dispatch} operation="÷" />
             <DigitButton dispatch={dispatch} digit="1" />
             <DigitButton dispatch={dispatch} digit="2" />
             <DigitButton dispatch={dispatch} digit="3" />
-            <button>*</button>
+            <OperationButton dispatch={dispatch} operation="*" />
             <DigitButton dispatch={dispatch} digit="4" />
             <DigitButton dispatch={dispatch} digit="5" />
             <DigitButton dispatch={dispatch} digit="6" />
-            <button>+</button>
+            <OperationButton dispatch={dispatch} operation="+" />
             <DigitButton dispatch={dispatch} digit="7" />
             <DigitButton dispatch={dispatch} digit="8" />
             <DigitButton dispatch={dispatch} digit="9" />
-            <button>-</button>
+            <OperationButton dispatch={dispatch} operation="-" />
             <DigitButton dispatch={dispatch} digit="." />
             <DigitButton dispatch={dispatch} digit="0" />
             <button className={styles.two_columns}>=</button>
