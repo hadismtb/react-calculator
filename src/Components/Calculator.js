@@ -41,11 +41,22 @@ const stateReducer = (state, action) => {
                 operation: ""
             }
         case "DELETE":
-            const length = state.currentOperand.length;
-            const newCurrentOperand = state.currentOperand.slice(0, length-1);
+            // const length = state.currentOperand.length;
+            // const newCurrentOperand = state.currentOperand.slice(0, length-1);
+            if (state.overwrite) {
+                return {
+                  ...state,
+                  overwrite: false,
+                  currentOperand: "",
+                }
+            }
+            if (state.currentOperand == "") return state
+            if (state.currentOperand.length === 1) {
+              return { ...state, currentOperand: "" }
+            }
             return{
                 ...state,
-                currentOperand: newCurrentOperand
+                currentOperand: state.currentOperand.slice(0, -1)
             }
         case "CHOOSE_OPERATION":
             if(state.currentOperand == "" && state.previosOperand == ""){
@@ -82,7 +93,7 @@ const stateReducer = (state, action) => {
                 overwrite: true
             }    
         } 
-        }                
+                    
 }
 
 const Calculator = () => {
