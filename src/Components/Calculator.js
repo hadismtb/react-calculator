@@ -18,6 +18,8 @@ const stateReducer = (state, action) => {
 
     switch(type) {
         case "ADD_DIGIT":
+            if (payload.digit === "0" && state.currentOperand === "0") return state;
+            if (state.currentOperand.includes(".") && payload.digit === ".") return state;
             return {
                 ...state,
                 currentOperand: `${state.currentOperand || ""}${payload.digit}`
