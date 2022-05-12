@@ -1,13 +1,16 @@
 import React from 'react';
 
+// STYLES
+import styles from "./Calculator.module.css";
+
 const Calculator = () => {
     return (
-        <div>
-            <div>
-                <div></div>
-                <div></div>
+        <div className={styles.container}>
+            <div className={styles.screen}>
+                <div className={styles.previous_operand}>12354 *</div>
+                <div className={styles.current_operand}>687</div>
             </div>
-            <button>AC</button>
+            <button className={styles.two_columns}>AC</button>
             <button>DEL</button>
             <button>/</button>
             <button>1</button>
@@ -24,7 +27,7 @@ const Calculator = () => {
             <button>-</button>
             <button>.</button>
             <button>0</button>
-            <button>=</button>
+            <button className={styles.two_columns}>=</button>
         </div>
     );
 };
