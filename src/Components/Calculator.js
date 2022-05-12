@@ -29,7 +29,14 @@ const stateReducer = (state, action) => {
                 previosOperand: "",
                 currentOperand: "",
                 operation: ""
-            }    
+            }
+        case "DELETE":
+            const length = state.currentOperand.length;
+            const newCurrentOperand = state.currentOperand.slice(0, length-1);
+            return{
+                ...state,
+                currentOperand: newCurrentOperand
+            }        
     }
 }
 
@@ -45,7 +52,7 @@ const Calculator = () => {
                 <div className={styles.current_operand}>{currentOperand}</div>
             </div>
             <button className={styles.two_columns} onClick={() => dispatch({type: "CLEAR"})}>AC</button>
-            <button>DEL</button>
+            <button onClick={() => dispatch({type: "DELETE"})}>DEL</button>
             <OperationButton dispatch={dispatch} operation="÷" />
             <DigitButton dispatch={dispatch} digit="1" />
             <DigitButton dispatch={dispatch} digit="2" />
