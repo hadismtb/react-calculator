@@ -18,24 +18,26 @@ const initialState = {
 
 const stateReducer = (state, action) => {
     const {type, payload} = action;
+    const {currentOperand, previosOperand, operation, overwrite} = state;
 
     switch(type) {
         case "ADD_DIGIT":
-            if (state.overwrite) {
+            if (overwrite) {
                 return {
                   ...state,
                   currentOperand: payload.digit,
                   overwrite: false,
                 }
             }
-            if (payload.digit === "0" && state.currentOperand === "0") return state;
-            if (state.currentOperand.includes(".") && payload.digit === ".") return state;
+            if (payload.digit === "0" && currentOperand === "0") return state;
+            if (currentOperand.includes(".") && payload.digit === ".") return state;
             return {
                 ...state,
-                currentOperand: `${state.currentOperand || ""}${payload.digit}`
+                currentOperand: `${currentOperand || ""}${payload.digit}`
             }
         case "CLEAR":
             return {
+                ...state,
                 previosOperand: "",
                 currentOperand: "",
                 operation: ""
@@ -43,34 +45,34 @@ const stateReducer = (state, action) => {
         case "DELETE":
             // const length = state.currentOperand.length;
             // const newCurrentOperand = state.currentOperand.slice(0, length-1);
-            if (state.overwrite) {
+            if (overwrite) {
                 return {
                   ...state,
                   overwrite: false,
                   currentOperand: "",
                 }
             }
-            if (state.currentOperand == "") return state
-            if (state.currentOperand.length === 1) {
+            if (currentOperand == "") return state
+            if (currentOperand.length === 1) {
               return { ...state, currentOperand: "" }
             }
             return{
                 ...state,
-                currentOperand: state.currentOperand.slice(0, -1)
+                currentOperand: currentOperand.slice(0, -1)
             }
         case "CHOOSE_OPERATION":
-            if(state.currentOperand == "" && state.previosOperand == ""){
+            if(currentOperand == "" && previosOperand == ""){
                 return state
             }
-            if(state.previosOperand == "") {
+            if(previosOperand == "") {
                 return {
                     ...state,
-                    previosOperand: state.currentOperand,
+                    previosOperand: currentOperand,
                     currentOperand: "",
                     operation: payload.operation
                 }
             }
-            if(state.currentOperand == ""){
+            if(currentOperand == ""){
                 return {
                     ...state,
                     operation: payload.operation
@@ -83,10 +85,11 @@ const stateReducer = (state, action) => {
                 operation: payload.operation
             }
             case "EVALUATE":  
-            if( state.previosOperand == "" || state.currentOperand == "" || state.operation == ""){
+            if( previosOperand == "" || currentOperand == "" || operation == ""){
                 return state
             }
             return {
+                ...state,
                 currentOperand: evaluate(state),
                 operation: "",
                 previosOperand: "",
