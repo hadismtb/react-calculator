@@ -13,7 +13,7 @@ import { evaluate } from '../handlers/functions';
 const initialState = {
     previosOperand: "",
     currentOperand: "",
-    operation: ""
+    operation: "",
 }
 
 const stateReducer = (state, action) => {
@@ -21,6 +21,13 @@ const stateReducer = (state, action) => {
 
     switch(type) {
         case "ADD_DIGIT":
+            if (state.overwrite) {
+                return {
+                  ...state,
+                  currentOperand: payload.digit,
+                  overwrite: false,
+                }
+            }
             if (payload.digit === "0" && state.currentOperand === "0") return state;
             if (state.currentOperand.includes(".") && payload.digit === ".") return state;
             return {
@@ -64,7 +71,18 @@ const stateReducer = (state, action) => {
                 currentOperand: "",
                 operation: payload.operation
             }
-        }           
+            case "EVALUATE":  
+            if( state.previosOperand == "" || state.currentOperand == "" || state.operation == ""){
+                return state
+            }
+            return {
+                currentOperand: evaluate(state),
+                operation: "",
+                previosOperand: "",
+                overwrite: true
+            }    
+        } 
+        }                
 }
 
 const Calculator = () => {
@@ -75,7 +93,7 @@ const Calculator = () => {
     return (
         <div className={styles.container}>
             <div className={styles.screen}>
-                <div className={styles.previous_operand}>{previosOperand}{operation}</div>
+                <div className={styles.previous_operand}>{previosOperand} {operation}</div>
                 <div className={styles.current_operand}>{currentOperand}</div>
             </div>
             <button className={styles.two_columns} onClick={() => dispatch({type: "CLEAR"})}>AC</button>
@@ -95,7 +113,7 @@ const Calculator = () => {
             <OperationButton dispatch={dispatch} operation="-" />
             <DigitButton dispatch={dispatch} digit="." />
             <DigitButton dispatch={dispatch} digit="0" />
-            <button className={styles.two_columns}>=</button>
+            <button className={styles.two_columns}  onClick={() => dispatch({type: "EVALUATE"})}>=</button>
         </div>
     );
 };
