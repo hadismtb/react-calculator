@@ -1,10 +1,13 @@
 import React from 'react';
 
+// COMPONENTS
+import Calculator from './Components/Calculator';
+
 const App = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <Calculator/>
+    </>
   );
 };
 
