@@ -7,6 +7,9 @@ import OperationButton from './OperationButton';
 // STYLES
 import styles from "./Calculator.module.css";
 
+// FUNCTIONS
+import { evaluate } from '../handlers/functions';
+
 const initialState = {
     previosOperand: "",
     currentOperand: "",
@@ -36,19 +39,43 @@ const stateReducer = (state, action) => {
             return{
                 ...state,
                 currentOperand: newCurrentOperand
-            }        
-    }
+            }
+        case "CHOOSE_OPERATION":
+            if(state.currentOperand == "" && state.previosOperand == ""){
+                return state
+            }
+            if(state.previosOperand == "") {
+                return {
+                    ...state,
+                    previosOperand: state.currentOperand,
+                    currentOperand: "",
+                    operation: payload.operation
+                }
+            }
+            if(state.currentOperand == ""){
+                return {
+                    ...state,
+                    operation: payload.operation
+                }
+            }
+            return {
+                ...state,
+                previosOperand: evaluate(state),
+                currentOperand: "",
+                operation: payload.operation
+            }
+        }           
 }
 
 const Calculator = () => {
     const [state, dispatch] = useReducer(stateReducer, initialState);
 
-    const {previosOperand, currentOperand} = state;
+    const {previosOperand, currentOperand, operation} = state;
 
     return (
         <div className={styles.container}>
             <div className={styles.screen}>
-                <div className={styles.previous_operand}>{previosOperand}</div>
+                <div className={styles.previous_operand}>{previosOperand}{operation}</div>
                 <div className={styles.current_operand}>{currentOperand}</div>
             </div>
             <button className={styles.two_columns} onClick={() => dispatch({type: "CLEAR"})}>AC</button>
